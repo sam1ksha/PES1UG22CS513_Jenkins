@@ -1,11 +1,12 @@
 pipeline {
-    agent any 
+    agent any
 
     stages {
         stage('Build') {
             steps {
                 script {
-                    sh 'g++ main.cpp -o PES1UG22CS513-1'
+                        echo 'Building the application...'
+                        sh 'g++ -o output main.cpp'
                 }
             }
         }
@@ -13,21 +14,22 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh './PES1UG22CS513-1'
-                }
+                        echo 'Running tests...'
+                        sh './output'  // Run the compiled binary
+                 }
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deployment stage (Placeholder - Add actual deployment steps here)'
+                script {
+                        echo 'Deploying application...'
+                 }
             }
         }
-    }
-
     post {
         failure {
-            echo 'Pipeline Failed'
+            echo 'Pipeline failed! Please check the logs for errors.'
         }
     }
 }
